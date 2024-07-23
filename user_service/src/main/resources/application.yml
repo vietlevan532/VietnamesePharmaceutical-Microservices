@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: user_service #Service name
+  data:
+    mongodb: #MongoDB connection
+      database: ${env.MONGO_DATABASE}
+      uri: mongodb+srv://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@${env.MONGO_CLUSTER}
+
+jwt:
+  secret-key: ${env.JWT_SECRET_KEY}
