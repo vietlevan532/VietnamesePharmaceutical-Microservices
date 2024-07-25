@@ -26,7 +26,7 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    // todo: Sing-Up
+    // todo: Sign-Up
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getEmail().substring(0, request.getEmail().indexOf("@"))).isPresent()) {
             return AuthenticationResponse.builder()
@@ -75,7 +75,7 @@ public class AuthenticationService {
         User user = userRepository.findByEmail(request.getLogin())
                 .orElseGet(() -> userRepository.findByPhoneNumber(request.getLogin())
                         .orElseGet(() -> userRepository.findByUsername(request.getLogin())
-                                .orElseThrow(() -> new UsernameNotFoundException("User not found!"))));
+                                .orElseThrow(() -> new UsernameNotFoundException("User '" + request.getLogin() + "' not found!"))));
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),

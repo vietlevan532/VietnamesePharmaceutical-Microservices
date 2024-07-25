@@ -1,11 +1,13 @@
 package com.zezanziet.pharmaceutical.vn.ms.user_service.configurations.jwt;
 
+import com.zezanziet.pharmaceutical.vn.ms.user_service.configurations.aws.services.AwsSecretsManager;
 import com.zezanziet.pharmaceutical.vn.ms.user_service.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -17,15 +19,17 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "920ecdab8b005429fa9b120e6c2be093f8c63706a2d559202c32093f9ce6624e";
-
     private static final long TOKEN_VALIDITY_IN_SECONDS = 86400;
     private static final long TOKEN_VALIDITY_IN_SECONDS_REMEMBER_ME = 2592000;
 
     private final long tokenValidityInMilliseconds;
     private final long tokenValidityInMillisecondsForRememberMe;
 
-    public JwtService() {
+    private final AwsSecretsManager awsSecretsManager;
+
+    @Autowired
+    public JwtService(AwsSecretsManager awsSecretsManager) {
+        this.awsSecretsManager = awsSecretsManager;
         this.tokenValidityInMilliseconds = 1000 * TOKEN_VALIDITY_IN_SECONDS;
         this.tokenValidityInMillisecondsForRememberMe = 1000 * TOKEN_VALIDITY_IN_SECONDS_REMEMBER_ME;
     }
@@ -93,37 +97,8 @@ public class JwtService {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(awsSecretsManager.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // todo (let see code below to optimize code above) Technology used: AWS Secret Manager
-    /*private static final String SECRET_NAME = "jwt-key";
-
-    public String extractLogin(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
-        try (AwsSecretsManagerClient client = AwsSecretsManagerClient.builder().build()) {
-            GetSecretValueRequest request = new GetSecretValueRequest()
-                    .withSecretId(SECRET_NAME)
-                    .withExtractParam("secret");
-            GetSecretValueResponse response = client.getSecretValue(request);
-            String secretValue = response.getSecretString();
-            return Jwts
-                    .parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(secretValue.getBytes()))
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (AwsException e) {
-            throw new RuntimeException("Không thể lấy bí mật từ AWS Secrets Manager", e);
-        }
-    }*/
 }

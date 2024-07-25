@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user-service/api/v1/test")
-public class Test {
+public class TestController {
 
     @GetMapping("/")
-    public ResponseEntity<String> tesst() {
+    public ResponseEntity<String> test() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok().body(username);
     }

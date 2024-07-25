@@ -8,6 +8,8 @@ spring:
     mongodb: #MongoDB connection
       database: ${env.MONGO_DATABASE}
       uri: mongodb+srv://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@${env.MONGO_CLUSTER}
-
-jwt:
-  secret-key: ${env.JWT_SECRET_KEY}
+aws:
+  accessKeyId: ${env.ACCESS_KEY_ID}
+  secretAccessKey: ${env.SECRET_ACCESS_KEY}
+  region: ${env.REGION}
+  secretKeyName: ${env.SECRET_KEY_NAME}
