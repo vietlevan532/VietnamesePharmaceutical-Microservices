@@ -24,7 +24,7 @@ public class AwsSecretsManager {
 
     public String getSecretKey() {
         GetSecretValueRequest getSecretValueRequest = GetSecretValueRequest.builder()
-                .secretId(awsProperties.getSecretKeyName())
+                .secretId(awsProperties.getJwtSecretKeyName())
                 .build();
 
         try {

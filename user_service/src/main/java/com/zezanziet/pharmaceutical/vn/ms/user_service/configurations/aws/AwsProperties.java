@@ -10,7 +10,7 @@ public class AwsProperties {
     private String accessKeyId;
     private String secretAccessKey;
     private String region;
-    private String secretKeyName;
+    private String jwtSecretKeyName;
 
     public String getRegion() {
         return region;
@@ -20,12 +20,12 @@ public class AwsProperties {
         this.region = region;
     }
 
-    public String getSecretKeyName() {
-        return secretKeyName;
+    public String getJwtSecretKeyName() {
+        return jwtSecretKeyName;
     }
 
-    public void setSecretKeyName(String secretName) {
-        this.secretKeyName = secretName;
+    public void setJwtSecretKeyName(String jwtSecretKeyName) {
+        this.jwtSecretKeyName = jwtSecretKeyName;
     }
 
     public String getAccessKeyId() {

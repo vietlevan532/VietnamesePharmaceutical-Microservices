@@ -1,4 +1,4 @@
-package com.zezanziet.pharmaceutical.vn.ms.user_service.auth;
+package com.zezanziet.pharmaceutical.vn.ms.user_service.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
