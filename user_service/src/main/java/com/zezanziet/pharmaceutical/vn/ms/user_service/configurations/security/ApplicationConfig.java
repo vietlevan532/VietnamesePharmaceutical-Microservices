@@ -1,4 +1,4 @@
-package com.zezanziet.pharmaceutical.vn.ms.user_service.configurations;
+package com.zezanziet.pharmaceutical.vn.ms.user_service.configurations.security;
 
 import com.zezanziet.pharmaceutical.vn.ms.user_service.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfiguration {
+public class ApplicationConfig {
 
     private final UserRepository userRepository;
 

@@ -1,9 +1,9 @@
 package com.zezanziet.pharmaceutical.vn.ms.user_service.controllers;
 
-import com.zezanziet.pharmaceutical.vn.ms.user_service.auth.AuthenticationRequest;
-import com.zezanziet.pharmaceutical.vn.ms.user_service.auth.AuthenticationResponse;
-import com.zezanziet.pharmaceutical.vn.ms.user_service.auth.AuthenticationService;
-import com.zezanziet.pharmaceutical.vn.ms.user_service.auth.RegisterRequest;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.AuthenticationRequest;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.AuthenticationResponse;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.services.AuthenticationService;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

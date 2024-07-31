@@ -1,13 +1,15 @@
-package com.zezanziet.pharmaceutical.vn.ms.user_service.auth;
+package com.zezanziet.pharmaceutical.vn.ms.user_service.services;
 
 import com.zezanziet.pharmaceutical.vn.ms.user_service.configurations.jwt.JwtService;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.AuthenticationRequest;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.AuthenticationResponse;
+import com.zezanziet.pharmaceutical.vn.ms.user_service.dtos.RegisterRequest;
 import com.zezanziet.pharmaceutical.vn.ms.user_service.models.Role;
 import com.zezanziet.pharmaceutical.vn.ms.user_service.models.User;
 import com.zezanziet.pharmaceutical.vn.ms.user_service.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -72,19 +74,19 @@ public class AuthenticationService {
 
     // todo: Sign-In
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        User user = userRepository.findByEmail(request.getLogin())
-                .orElseGet(() -> userRepository.findByPhoneNumber(request.getLogin())
-                        .orElseGet(() -> userRepository.findByUsername(request.getLogin())
-                                .orElseThrow(() -> new UsernameNotFoundException("User '" + request.getLogin() + "' not found!"))));
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
+                        request.getLogin(),
                         request.getPassword()
                 )
         );
-        var jwtToken = jwtService.generateToken(user , request.getLogin(), request.isRememberMe());
+        var user = userRepository.findByEmail(request.getLogin())
+                .orElseGet(() -> userRepository.findByPhoneNumber(request.getLogin())
+                        .orElseGet(() -> userRepository.findByUsername(request.getLogin())
+                                .orElseThrow(() -> new IllegalArgumentException("Invalid login information or password!"))));
+        var jwtAccessToken = jwtService.generateToken(user , request.getLogin(), request.isRememberMe());
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(jwtAccessToken)
                 .build();
     }
 

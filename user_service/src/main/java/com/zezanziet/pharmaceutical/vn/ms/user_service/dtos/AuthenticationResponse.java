@@ -1,4 +1,4 @@
-package com.zezanziet.pharmaceutical.vn.ms.user_service.auth;
+package com.zezanziet.pharmaceutical.vn.ms.user_service.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
