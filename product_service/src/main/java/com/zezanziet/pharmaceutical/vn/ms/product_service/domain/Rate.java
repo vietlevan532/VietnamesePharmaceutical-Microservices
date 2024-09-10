@@ -1,4 +1,4 @@
-package com.zezanziet.pharmaceutical.vn.ms.product_service.models;
+package com.zezanziet.pharmaceutical.vn.ms.product_service.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
